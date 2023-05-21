@@ -123,6 +123,30 @@ class BST
             }
             return sol;
         }
+    
+     vector<vector<int>> LevelOrdertrav(TreeNode* root)
+        {
+            vector<vector<int>> ans;
+            queue<TreeNode *> q;
+            q.push(root);
+
+            while(!q.empty())
+            {
+                vector<int> intr;
+                int n = q.size();
+                while(n--)
+                {
+                    TreeNode *temp = q.front();
+                    q.pop();
+
+                    if(temp->left!=NULL) q.push(temp->left);
+                    if(temp->right!=NULL) q.push(temp->right);
+                    intr.push_back(temp->val);
+                }
+                ans.push_back(intr);
+            }
+            return ans;
+        }
 
 };
 
@@ -149,7 +173,14 @@ int main()
         vector<int> morrisPreOrder = bst.MorristravPreOrder(root);
         for(auto &it : morrisPreOrder) cout<<it<<" ";
         cout<<endl;
-
+    
+        vector<vector<int>> sol = bst.LevelOrdertrav(root);
+        for(auto &it : sol)
+        {
+            cout << "|";
+            for(auto &it2 : it) cout<< it2 <<" ";
+        }
+    
         return 0;
 
 }
