@@ -124,7 +124,7 @@ class BST
             return sol;
         }
     
-     vector<vector<int>> LevelOrdertrav(TreeNode* root)
+        vector<vector<int>> LevelOrdertrav(TreeNode* root)
         {
             vector<vector<int>> ans;
             queue<TreeNode *> q;
