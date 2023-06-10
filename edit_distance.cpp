@@ -39,6 +39,7 @@ int edit_distance_memo_top_down(int i, int j, string &s1, string &s2, vector<vec
     }
 }
 
+/* T(n)=O(n*m) and S(n)=O(n*m) */
 int edit_distance_DP_bottom_up(int n, int m, string &s1, string &s2, vector<vector<int>> &dp)
 {
     for (int i = 0; i <= n; i++)    dp[i][0] = i;/*same logic.. if j=0 then we need i len to make them equal*/
@@ -65,6 +66,7 @@ int edit_distance_DP_bottom_up(int n, int m, string &s1, string &s2, vector<vect
     return dp[n][m];
 }
 
+/*T(n)=O(n*m) and S(n)=O(m)*/
 int edit_distance_space_opt_bottom_up(int n, int m, string &s1, string &s2)
 {
     vector<int> prev(m + 1, 0);/*note :: prev=dp[i-1]*/
