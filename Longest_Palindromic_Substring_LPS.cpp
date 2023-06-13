@@ -32,10 +32,10 @@ eg :: a   b                               c                              c      
      (a) (ab)                           (abc)                          (abcc) (abccb)  (abccbc)
     a 1  (len=1 a!=b,sol=0)  (len=2 a!=c,from i+1->j-1 not pali sol=0)   0       0          0
     b     1(b)                            (bc)                          (bcc)    (bccb)    (bccbc)
-    c           1
-    c                 1
-    b                         1
-    c                                  1
+    c                                      1
+    c                                                                    1
+    b                                                                             1
+    c                                                                                        1
 */
 pair<int,int> longest_palindromic_substring_dp(string &s)
 {
