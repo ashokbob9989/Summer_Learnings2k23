@@ -18,7 +18,6 @@ bool word_break_brute_force_REC(string &s, set<string> &words, int i)
 }
 
 /*T(n)=O(N^3) and S(n)=O(N), where N is the length of the given string.
-
 How can you calculate the number of different possible words that can be constructed from the given string?
 Following the dynamic programming approach discussed above, instead of making dp[i] = true, add dp[[j – 1] with dp[i] for j > 0. At the end, return dp[N].*/
 bool word_break_DP(string &s, set<string> &words)
@@ -46,6 +45,34 @@ bool word_break_DP(string &s, set<string> &words)
     return dp[n];/*....if for len=n true then return true....*/
 }
 
+/*T(n)=O(n^2) and S(n)=O(n)
+eg :: s=applepenapple and words=apple, pen 
+here we get dp as 0 1 2 3 4 0 1 2 0 1 2 3 4 0
+                  here the value=0 indicates the length at which the substr is found say 5th position in dp is "0" right? so, in the main string we can see from (0->4)th index the dictionaty string is found in main string
+                  again 8th pos=0 so, in th main string till 7 index we found the dic strings.... so, on so forth if till "n" length if we get ==0 in dp tht signifies our main string is whole found in dictionary. so, if(dp[n]==0 the yes else no.)*/
+string word_break_opt(string s, vector<string>&dic)
+{
+    int n=s.size();
+    unordered_set<string>words;/*used this ds coz for find function it uses only O(1) time complexity*/
+    for(auto &it : dic)words.insert(it);
+    vector<int>dp(n+1,0);
+    
+    for(int i=1;i<=n;i++)
+    {
+        dp[i]=1+dp[i-1];
+        for(int j=max(1,i-19);j<=i;j++)/*note here we did max(1,i-19) coz in qn they mentioned maxlen of dictionaty word=20 so, we did (i-19) for general case if they mention dictionary maxlen is "m" then run j loop from max(1, i-m) till <=i*/
+        {
+            string sub=s.substr(j-1,i-j+1);
+            if(words.find(sub)!=words.end()) dp[i]=min(dp[i],dp[j-1]);
+        }
+    }
+    /*dbg*/
+    // for(auto &it : dp) cout<<it<<" ";
+    // cout << endl;
+
+    return dp[n]==0 ? "YES" : "NO";
+}
+
 int main()
 {
     string s;
@@ -56,16 +83,22 @@ int main()
     vector<string> dictionary(n);
     for(auto &it : dictionary) cin>>it;
 
-    set<string> words(dictionary.begin(), dictionary.end());
+    // set<string> words(dictionary.begin(), dictionary.end());
 
-    bool fg = 0;
-    int i = 0;/*i= starting index of the string*/
-    fg = word_break_brute_force_REC(s, words, i);
-    if(fg==1)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+    // bool fg = 0;
+    // int i = 0;/*i= starting index of the string*/
+    // fg = word_break_brute_force_REC(s, words, i);
+    // if(fg==1)cout<<"YES"<<endl;
+    // else cout<<"NO"<<endl;
 
-    fg = 0;
-    fg = word_break_DP(s, words);
-    if(fg==1)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+    // fg = 0;
+    // fg = word_break_DP(s, words);
+    // if(fg==1)cout<<"YES"<<endl;
+    // else cout<<"NO"<<endl;
+
+    /*------use this most efficient--------*/
+    string fgopt = word_break_opt(s, dictionary);
+    cout << fgopt << endl;
+    
+    return 0;
 }
